@@ -1,0 +1,136 @@
+<?php if (isset($_COOKIE['expiration_date_admin'])) { echo '<br><span style="color: red; font-size: 20px;">LOGIN BUTTON IS DISABLED</span><br>'; } ?>
+										<p id="timer" style="color: red; font-size: 20px;">
+										<?php
+
+											function formatSeconds($seconds) {
+  												$t = round($seconds);
+  												return sprintf('%02d:%02d', ($t/60%60), $t%60);
+											}
+
+											if (isset($_COOKIE['expiration_date_admin'])) { 
+												$time_left = $_COOKIE['expiration_date_admin'] - time();
+												echo formatSeconds($time_left);
+											} 
+										?>
+
+
+
+if (!empty($timein) && $currentdate == $date) {
+
+
+else {
+                $sqli = "INSERT INTO `tblstatus`(`EmployeeID`, `Date`, `TimeIn`) VALUES ('$search','$date','$time')";
+                $conn->query($sqli) or die($conn->error);
+                while ($row = mysqli_fetch_array($result)) {
+                    $id = $row['EmployeeID'];
+                    $fname = $row['Firstname'];
+                    $mname = $row['Middlename'];
+                    $lname = $row['Lastname'];
+                    $wholename = $fname . " " . $mname . " " . $lname;
+                    $image = $row['image'];
+
+                ?>
+                    <form method="POST" id="details">
+                        <label class="col-form-label">Employee Name</label>
+                        <input class="form-control" name="aapprove-email" value="<?php echo $wholename ?>" required style="background-color: white;">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label class="col-form-label">Time In</label>
+                                <input class="form-control" value="<?php echo $time ?>" required style="background-color: white;">
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="col-form-label">Time Out</label>
+                                <input class="form-control" value="" required style="background-color: white;">
+                            </div>
+                        </div>
+                        <!-- <input class="form-control" name="employeename" type="text" value="<?php echo $wholename ?>" readonly style="background-color: white;"> -->
+                        <label class="col-form-label"></label>
+                    </form>
+<?php }
+            }
+
+
+
+            <?php 
+            if($row = mysqli_fetch_array($inventory) > 0){
+                while($row = mysqli_fetch_array($inventory)){
+                    
+                }
+            }else{
+                    do{ ?>
+                        
+                    <?php } while (
+                        ($row = $inventory->fetch_assoc());
+                    )
+                    }
+                    ?>
+
+
+
+
+
+
+
+                    <div id="viewdetails" class="modal fade" role="dialog">
+                    <form class="edit-profile m-b30" method="POST" enctype="multipart/form-data">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><img src="../assets/images/icon.png" style="width: 30px; height: 30px;">&nbsp;Summary of Attendance</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body" id="viewdata">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn red outline radius-xl" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+    </div>
+</div>
+</form>
+</div>
+
+
+
+$fileName = basename($_FILES["uploadimage"]["name"]);
+$filetype = pathinfo($fileName, PATHINFO_EXTENSION);
+$allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+if (in_array($filetype, $allowTypes)) {
+    $image = $_FILES['uploadimage']['tmp_name'];
+    $imgcontent = addslashes(file_get_contents($image));
+    $updaterfid = $conn->query("UPDATE `tblinformation` SET `EmployeeID`='$employeeid', `ContactNumber`='$contact',`EmergencyContactName`='$emergcontactname',`EmergencyContactNumber`='$emegrcontact',`Salary`='$salary' WHERE `Firstname`='$fname' AND `Middlename`='$mname'AND `Lastname`='$lname'");
+    if ($updaterfid) {
+        echo "<script>alert('RFID Successfully Updated'); window.location='../employees.php'</script>";
+    } else {
+        echo "<script>alert('RFID Successfully Not Updated'); window.location='../employees.php'</script>";
+    }
+}
+
+
+
+
+
+
+<script>
+	function loadXMLDoc() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("table_list").innerHTML =
+					this.responseText;
+			}
+		};
+		xhttp.open("GET", "modal/kitchentablelist.php", true);
+		xhttp.send();
+	}
+	setInterval(function(){
+		loadXMLDoc();
+
+	},1000)
+
+	window.onload = loadXMLDoc;
+</script>
